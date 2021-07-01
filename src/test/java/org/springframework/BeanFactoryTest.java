@@ -23,10 +23,8 @@ public class BeanFactoryTest {
         beanFactory.registerBeanDefinition(beanName, beanDefinition);
 
         // 3.获取Bean
-        UserService userService = (UserService) beanFactory.getBean(beanName);
+        UserService userService = (UserService) beanFactory.getBean(beanName, "阮威敏");
         userService.queryUserInfo();
 
-        userService = (UserService) beanFactory.getBean(beanName);
-        userService.queryUserInfo();
     }
 }
