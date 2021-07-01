@@ -1,8 +1,12 @@
 package org.springframework;
 
 import org.junit.Test;
+import org.springframework.bean.UserDao;
 import org.springframework.bean.UserService;
+import org.springframework.beans.PropertyValue;
+import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.config.BeanReference;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 
 /**
@@ -19,12 +23,21 @@ public class BeanFactoryTest {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
         // 2.注入Bean
-        BeanDefinition beanDefinition = new BeanDefinition(UserService.class);
+        PropertyValues propertyValues = new PropertyValues();
+        propertyValues.addPropertyValue(new PropertyValue("no", "GSZN11374"));
+        propertyValues.addPropertyValue(new PropertyValue("userDao", new BeanReference("userDao")));
+
+        BeanDefinition beanDefinition = new BeanDefinition(UserService.class, propertyValues);
+
         beanFactory.registerBeanDefinition(beanName, beanDefinition);
+
+        BeanDefinition userDaoBeanDefinition = new BeanDefinition(UserDao.class);
+        beanFactory.registerBeanDefinition("userDao", userDaoBeanDefinition);
 
         // 3.获取Bean
         UserService userService = (UserService) beanFactory.getBean(beanName, "阮威敏");
-        userService.queryUserInfo();
+        String userName = userService.queryUserInfo();
+        System.out.println(userService.getName() + " " + userService.getNo() + " " + userName);
 
     }
 }

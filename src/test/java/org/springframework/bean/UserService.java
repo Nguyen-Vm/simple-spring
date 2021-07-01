@@ -9,11 +9,41 @@ public class UserService {
 
     private String name;
 
+    private Integer age;
+
+    private String no;
+
+    private UserDao userDao;
+
     public UserService(String name) {
         this.name = name;
     }
 
-    public void queryUserInfo() {
-        System.out.println("查询用户信息 " + name);
+    public String queryUserInfo() {
+        return userDao.queryUserInfo(no);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
     }
 }
