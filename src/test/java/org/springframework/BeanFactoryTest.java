@@ -2,6 +2,8 @@ package org.springframework;
 
 import org.junit.Test;
 import org.springframework.bean.UserService;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 
 /**
  * @author 阮威敏
@@ -12,15 +14,19 @@ public class BeanFactoryTest {
 
     @Test
     public void test() {
+        String beanName = "userService";
         // 1.初始化 BeanFactory
-        BeanFactory beanFactory = new BeanFactory();
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
         // 2.注入Bean
-        BeanDefinition beanDefinition = new BeanDefinition(new UserService());
-        beanFactory.registerBeanDefinition("userService", beanDefinition);
+        BeanDefinition beanDefinition = new BeanDefinition(UserService.class);
+        beanFactory.registerBeanDefinition(beanName, beanDefinition);
 
         // 3.获取Bean
-        UserService userService = (UserService) beanFactory.getBean("userService");
+        UserService userService = (UserService) beanFactory.getBean(beanName);
+        userService.queryUserInfo();
+
+        userService = (UserService) beanFactory.getBean(beanName);
         userService.queryUserInfo();
     }
 }
